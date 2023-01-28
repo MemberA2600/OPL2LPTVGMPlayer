@@ -1,0 +1,9 @@
+D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\bin\Debug\OPL2LPT_Player.exe.config
+D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\bin\Debug\OPL2LPT_Player.exe
+D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\bin\Debug\OPL2LPT_Player.pdb
+D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\obj\Debug\OPL2LPT_Player.csprojResolveAssemblyReference.cache
+D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\obj\Debug\OPL2LPT_Player.Form1.resources
+D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\obj\Debug\OPL2LPT_Player.Properties.Resources.resources
+D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\obj\Debug\OPL2LPT_Player.csproj.GenerateResource.Cache
+D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\obj\Debug\OPL2LPT_Player.exe
+D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\obj\Debug\OPL2LPT_Player.pdb
