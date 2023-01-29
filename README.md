@@ -19,5 +19,5 @@ https://www.serdashop.com/OPL2LPT
 <b><i>Used applications, inspirations:</i></b>
 <ul>
 <li><b>VGM2TXT</b> - https://github.com/vgmrips/vgmtools/blob/master/vgm2txt.c</li>
-<li><b>Original test application (for DOS)</b> - https://github.com/vgmrips/vgmtools/blob/master/vgm2txt](https://github.com/pdewacht/adlipt/tree/master/opl2test)</li>
+<li><b>Original test application (for DOS)</b> - https://github.com/pdewacht/adlipt/tree/master/opl2test)</li>
 <ul>
