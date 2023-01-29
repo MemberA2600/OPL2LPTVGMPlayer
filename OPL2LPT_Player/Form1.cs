@@ -17,20 +17,22 @@ namespace OPL2LPT_Player
     public partial class Form1 : Form
     {
 
-        public VGMPlayer player = new VGMPlayer();
+        public VGMPlayer player  = new VGMPlayer();
+        private Timer timer      = new Timer();
+        private bool isPlaying   = false;
 
         public Form1()
         {
 
             AddFont(Properties.Resources.PerfectDos);
 
-            Font FontHuge     = new Font(pfc.Families[0], 23, FontStyle.Regular);
-            Font FontBig      = new Font(pfc.Families[0], 20, FontStyle.Regular);
-            Font FontNormal   = new Font(pfc.Families[0], 17, FontStyle.Regular);
-            Font FontSmaller  = new Font(pfc.Families[0], 14, FontStyle.Regular);
-            Font FontSmall    = new Font(pfc.Families[0], 14, FontStyle.Regular);
-            Font FontTiny     = new Font(pfc.Families[0], 12, FontStyle.Regular);
-            Font Font13       = new Font(pfc.Families[0], 13, FontStyle.Regular);
+            Font FontHuge = new Font(pfc.Families[0], 23, FontStyle.Regular);
+            Font FontBig = new Font(pfc.Families[0], 20, FontStyle.Regular);
+            Font FontNormal = new Font(pfc.Families[0], 17, FontStyle.Regular);
+            Font FontSmaller = new Font(pfc.Families[0], 14, FontStyle.Regular);
+            Font FontSmall = new Font(pfc.Families[0], 14, FontStyle.Regular);
+            Font FontTiny = new Font(pfc.Families[0], 12, FontStyle.Regular);
+            Font Font13 = new Font(pfc.Families[0], 13, FontStyle.Regular);
 
 
             InitializeComponent();
@@ -54,23 +56,88 @@ namespace OPL2LPT_Player
             DeleteButton.Font = FontSmaller;
             LoadButton.Font = FontSmaller;
             SaveButton.Font = FontSmaller;
+            AddDir.Font     = FontSmaller;
 
             RepeatAll.Font = FontSmall;
             RandomAll.Font = FontSmall;
             RepeatOne.Font = FontSmall;
 
             playlistBox.Font = FontTiny;
-            LPTPort.Font     = Font13;
+            LPTPort.Font = Font13;
+
+            timer.Interval = 50;
+            timer.Tick += new EventHandler(check_Items);
+            timer.Enabled = true;
+
+        }
+        void check_Items(object sender, EventArgs e)
+        {
+
+            if (player.isError == true) {
+               player.isPlaying = false;
+               isPlaying        = false;
+               player.isError   = false;
+            }
+
+            if (playlistBox.Items.Count == 0)
+            {
+                PlayButton.Enabled   = false;
+                DeleteButton.Enabled = false;
+                StopButton.Enabled   = false;
+                return;
+            }
+
+            PlayButton.Enabled   = !isPlaying;
+            StopButton.Enabled   = isPlaying;
+
+            AddButton.Enabled    = !isPlaying;
+            AddDir.Enabled       = !isPlaying;
+            DeleteButton.Enabled = !isPlaying;
+            LoadButton.Enabled   = !isPlaying;
+            SaveButton.Enabled   = !isPlaying;
+
+            if (isPlaying == true && player.isPlaying == false)
+            {
+                string currentSelected = playlistBox.GetItemText(playlistBox.SelectedItem);
+                int    currenIndex     = playlistBox.SelectedIndex;
+
+                playlistBox.SelectedItem = null;
+                int nextIndex            = 0;
+
+                if (RepeatAll.Checked == true)
+                {
+                    nextIndex = currenIndex + 1;
+                    if (nextIndex > playlistBox.Items.Count - 1) nextIndex = 0;
+                }
+                else if (RepeatOne.Checked == true)
+                {
+                    nextIndex = currenIndex;
+                }
+                else if (RandomAll.Checked)
+                {
+                    Random rnd = new Random();
+                    nextIndex = rnd.Next(0, playlistBox.Items.Count);
+                }
+
+                playlistBox.SelectedIndex = nextIndex;
+                playlistBox.SelectedItem  = playlistBox.Items[nextIndex];
+
+                player.PlaySongThread(playlistBox.GetItemText(playlistBox.SelectedItem),
+                      Convert.ToInt16("0x" + LPTPort.Text, 16));
+
+                isPlaying = true;
+            }
 
         }
 
+        
         [DllImport("gdi32.dll")]
         private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
         private static PrivateFontCollection pfc = new PrivateFontCollection();
         private static uint cFonts = 0;
         private void AddFont(byte[] fontdata)
         {
-            int fontLength; System.IntPtr dataPointer;
+            System.IntPtr dataPointer;
 
             //We are going to need a pointer to the font data, so we are generating it here
             dataPointer = Marshal.AllocCoTaskMem(fontdata.Length);
@@ -87,11 +154,6 @@ namespace OPL2LPT_Player
 
             //Finally, we can actually add the font to our collection
             pfc.AddMemoryFont(dataPointer, (int)fontdata.Length);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
 
@@ -235,11 +297,14 @@ namespace OPL2LPT_Player
 
             player.PlaySongThread(playlistBox.GetItemText(playlistBox.SelectedItem),
                                   Convert.ToInt16("0x" + LPTPort.Text, 16));
+
+            isPlaying = true;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             player.shouldStop = true;
+            isPlaying         = false;
         }
 
         private void LPTPort_TextChanged(object sender, EventArgs e)
@@ -266,6 +331,40 @@ namespace OPL2LPT_Player
             LPTPort.SelectionStart  = LPTPort.Text.Length;
             LPTPort.SelectionLength = 0;
             
+        }
+
+        private void AddDir_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string[] files = Directory.GetFiles(folderDialog.SelectedPath, "*.*", SearchOption.AllDirectories);
+
+                    string firstOne = ""    ;
+                    bool first      = true ;
+
+                    foreach (string filePath in files)
+                    {
+                        string[] xxx = filePath.Split('.');
+                        string ext   = xxx[xxx.Length-1];
+
+                        if (playlistBox.Items.Contains(filePath) == false &&
+                            (ext == "vgm" || ext == "vgz")
+                            )
+
+                        { playlistBox.Items.Add(filePath); 
+                          if (first == true) {
+                              first = false;
+                              firstOne = filePath;
+                          }
+                        }
+                    }
+                    playlistBox.SelectedItem = firstOne;
+
+                }
+            }
         }
 
 

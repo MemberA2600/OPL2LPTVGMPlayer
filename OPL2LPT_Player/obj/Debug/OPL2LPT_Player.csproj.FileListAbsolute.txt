@@ -7,3 +7,6 @@ D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\obj\Debug\OPL2LPT_
 D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\obj\Debug\OPL2LPT_Player.csproj.GenerateResource.Cache
 D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\obj\Debug\OPL2LPT_Player.exe
 D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPT_Player\obj\Debug\OPL2LPT_Player.pdb
+D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPTVGMPlayer\OPL2LPT_Player\bin\Debug\OPL2LPT_Player.exe.config
+D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPTVGMPlayer\OPL2LPT_Player\obj\Debug\OPL2LPT_Player.exe
+D:\dotNetStuff\OPL2LPTVGMPlayer\OPL2LPT_Player\OPL2LPTVGMPlayer\OPL2LPT_Player\obj\Debug\OPL2LPT_Player.pdb

@@ -55,6 +55,7 @@
             this.StopButton = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.LPTPort = new System.Windows.Forms.TextBox();
+            this.AddDir = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -103,7 +104,7 @@
             this.playlistBox.ItemHeight = 20;
             this.playlistBox.Location = new System.Drawing.Point(58, 245);
             this.playlistBox.Name = "playlistBox";
-            this.playlistBox.Size = new System.Drawing.Size(528, 544);
+            this.playlistBox.Size = new System.Drawing.Size(528, 584);
             this.playlistBox.Sorted = true;
             this.playlistBox.TabIndex = 3;
             this.playlistBox.SelectedIndexChanged += new System.EventHandler(this.playlistBox_SelectedIndexChanged);
@@ -246,7 +247,7 @@
             this.DeleteButton.BackColor = System.Drawing.Color.Cyan;
             this.DeleteButton.Font = new System.Drawing.Font("Perfect DOS VGA 437", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DeleteButton.ForeColor = System.Drawing.Color.Black;
-            this.DeleteButton.Location = new System.Drawing.Point(596, 569);
+            this.DeleteButton.Location = new System.Drawing.Point(597, 605);
             this.DeleteButton.Name = "DeleteButton";
             this.DeleteButton.Size = new System.Drawing.Size(191, 30);
             this.DeleteButton.TabIndex = 15;
@@ -259,7 +260,7 @@
             this.LoadButton.BackColor = System.Drawing.Color.Cyan;
             this.LoadButton.Font = new System.Drawing.Font("Perfect DOS VGA 437", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LoadButton.ForeColor = System.Drawing.Color.Black;
-            this.LoadButton.Location = new System.Drawing.Point(597, 605);
+            this.LoadButton.Location = new System.Drawing.Point(596, 641);
             this.LoadButton.Name = "LoadButton";
             this.LoadButton.Size = new System.Drawing.Size(191, 30);
             this.LoadButton.TabIndex = 16;
@@ -272,7 +273,7 @@
             this.SaveButton.BackColor = System.Drawing.Color.Cyan;
             this.SaveButton.Font = new System.Drawing.Font("Perfect DOS VGA 437", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SaveButton.ForeColor = System.Drawing.Color.Black;
-            this.SaveButton.Location = new System.Drawing.Point(596, 643);
+            this.SaveButton.Location = new System.Drawing.Point(596, 677);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(191, 30);
             this.SaveButton.TabIndex = 17;
@@ -332,11 +333,12 @@
             // PlayButton
             // 
             this.PlayButton.BackColor = System.Drawing.Color.Magenta;
+            this.PlayButton.Enabled = false;
             this.PlayButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PlayButton.Font = new System.Drawing.Font("Perfect DOS VGA 437", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PlayButton.ForeColor = System.Drawing.Color.Black;
             this.PlayButton.Image = global::OPL2LPT_Player.Properties.Resources.play;
-            this.PlayButton.Location = new System.Drawing.Point(597, 719);
+            this.PlayButton.Location = new System.Drawing.Point(596, 769);
             this.PlayButton.Name = "PlayButton";
             this.PlayButton.Size = new System.Drawing.Size(92, 50);
             this.PlayButton.TabIndex = 22;
@@ -346,11 +348,12 @@
             // StopButton
             // 
             this.StopButton.BackColor = System.Drawing.Color.Magenta;
+            this.StopButton.Enabled = false;
             this.StopButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.StopButton.Font = new System.Drawing.Font("Perfect DOS VGA 437", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StopButton.ForeColor = System.Drawing.Color.Black;
             this.StopButton.Image = global::OPL2LPT_Player.Properties.Resources.stop;
-            this.StopButton.Location = new System.Drawing.Point(694, 719);
+            this.StopButton.Location = new System.Drawing.Point(695, 769);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(93, 50);
             this.StopButton.TabIndex = 23;
@@ -363,7 +366,7 @@
             this.label9.BackColor = System.Drawing.Color.Black;
             this.label9.Font = new System.Drawing.Font("Perfect DOS VGA 437", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Cyan;
-            this.label9.Location = new System.Drawing.Point(593, 686);
+            this.label9.Location = new System.Drawing.Point(593, 737);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(108, 20);
             this.label9.TabIndex = 24;
@@ -375,7 +378,7 @@
             this.LPTPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LPTPort.Font = new System.Drawing.Font("Perfect DOS VGA 437", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LPTPort.ForeColor = System.Drawing.Color.Cyan;
-            this.LPTPort.Location = new System.Drawing.Point(707, 684);
+            this.LPTPort.Location = new System.Drawing.Point(707, 735);
             this.LPTPort.MaxLength = 3;
             this.LPTPort.Name = "LPTPort";
             this.LPTPort.Size = new System.Drawing.Size(81, 26);
@@ -383,12 +386,26 @@
             this.LPTPort.Text = "378";
             this.LPTPort.TextChanged += new System.EventHandler(this.LPTPort_TextChanged);
             // 
+            // AddDir
+            // 
+            this.AddDir.BackColor = System.Drawing.Color.Cyan;
+            this.AddDir.Font = new System.Drawing.Font("Perfect DOS VGA 437", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddDir.ForeColor = System.Drawing.Color.Black;
+            this.AddDir.Location = new System.Drawing.Point(597, 569);
+            this.AddDir.Name = "AddDir";
+            this.AddDir.Size = new System.Drawing.Size(191, 30);
+            this.AddDir.TabIndex = 26;
+            this.AddDir.Text = "Add Directory";
+            this.AddDir.UseVisualStyleBackColor = false;
+            this.AddDir.Click += new System.EventHandler(this.AddDir_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Magenta;
-            this.ClientSize = new System.Drawing.Size(1016, 781);
+            this.ClientSize = new System.Drawing.Size(1016, 831);
+            this.Controls.Add(this.AddDir);
             this.Controls.Add(this.LPTPort);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.StopButton);
@@ -416,11 +433,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(1024, 808);
-            this.MinimumSize = new System.Drawing.Size(1024, 808);
+            this.MaximumSize = new System.Drawing.Size(1024, 858);
+            this.MinimumSize = new System.Drawing.Size(1024, 858);
             this.Name = "Form1";
             this.Text = "OPT2LPT Player";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -455,6 +471,7 @@
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox LPTPort;
+        private System.Windows.Forms.Button AddDir;
 
 
     }

@@ -142,6 +142,7 @@ namespace OPL2LPT_Player
         string      filePath ;
         short       lpt;
         public bool isPlaying;
+        public bool isError;
 
         public VGMPlayer()
         {
@@ -150,30 +151,42 @@ namespace OPL2LPT_Player
 
         string CallVGM2TXT(string fileName, string currdir)
         {
-            System.Diagnostics.Process VGM2TXT = new System.Diagnostics.Process();
-            VGM2TXT.StartInfo.FileName = String.Concat(currdir, "/vgm2txt/vgm2txt.exe");
-            VGM2TXT.StartInfo.Arguments = String.Concat(fileName, " 0 0");
-            VGM2TXT.StartInfo.RedirectStandardOutput = true;
-            VGM2TXT.StartInfo.RedirectStandardError = true;
-            VGM2TXT.StartInfo.UseShellExecute = false;
-            VGM2TXT.StartInfo.CreateNoWindow = true;
-
-            VGM2TXT.Start();
-
+            
             List<string> temp = fileName.Split('.').ToList();
+            string extension  = temp[temp.Count - 1];
             temp.RemoveAt(temp.Count - 1);
             string fNameWithoutExt = String.Join("", temp);
 
+            string copyName = currdir + "/vgm2txt/temp." + extension;
+
+            if (File.Exists(copyName)) File.Delete(copyName);
+            File.Copy(fileName, copyName);
+
+            System.Diagnostics.Process VGM2TXT = new System.Diagnostics.Process();
+            VGM2TXT.StartInfo.FileName = String.Concat(currdir, "/vgm2txt/vgm2txt.exe");
+            VGM2TXT.StartInfo.Arguments = "\"" + currdir + "/vgm2txt/temp." + extension + "\"" + " 0 0";
+            VGM2TXT.StartInfo.UseShellExecute = false;
+
+            bool dontShowIt = true;
+
+            VGM2TXT.StartInfo.RedirectStandardOutput = dontShowIt;
+            VGM2TXT.StartInfo.RedirectStandardError  = dontShowIt;
+            VGM2TXT.StartInfo.CreateNoWindow         = dontShowIt;
+
+            VGM2TXT.Start();
+
             bool done = false;
             string loadedText = "";
-
             while (done == false)
             {
                 try
                 {
-                    loadedText = File.ReadAllText(string.Concat(currdir, "/", fNameWithoutExt, ".txt"));
+
+                    loadedText = File.ReadAllText(string.Concat(currdir + "/vgm2txt/temp.txt"));
                     done = true;
                     VGM2TXT.Close();
+                    File.Delete(currdir + "/vgm2txt/temp.txt");
+                    File.Delete(copyName);
 
                 }
                 catch
@@ -181,9 +194,10 @@ namespace OPL2LPT_Player
 
                 }
             }
-
             return loadedText;
         }
+
+        
 
         void displayError(string message)
         {
@@ -193,6 +207,8 @@ namespace OPL2LPT_Player
               System.Windows.Forms.MessageBoxButtons.OK,
               System.Windows.Forms.MessageBoxIcon.Error);
 
+            isPlaying = false;
+            isError   = true;
         }
 
         public Dictionary<string, string> getMetaData(string filePath)
@@ -290,7 +306,8 @@ namespace OPL2LPT_Player
         void PlaySong() 
         {
             shouldStop = false;
-            isPlaying = true;
+            isPlaying  = true;
+            isError    = false;
 
             if (interFace.IsInpOutDriverOpen() == 0)
             {
@@ -376,6 +393,13 @@ namespace OPL2LPT_Player
                             tempString = String.Concat("0x", lineData[3]);
                             dataNum = Convert.ToInt16(tempString, 16);
 
+                            if (command == "61")
+                            {
+                               tempString = String.Concat("0x", lineData[3], lineData[2]);
+                               waitNum = Convert.ToInt32(tempString, 16);
+
+                            }
+
                         }
                         else if (command == "62")
                         {
@@ -385,11 +409,7 @@ namespace OPL2LPT_Player
                         {
                             waitNum = 882;
                         }
-                        else if (command == "61")
-                        {
-                            string tempString = String.Concat("0x", lineData[3], lineData[2]);
-                            waitNum = Convert.ToInt32(tempString, 16);
-                        }
+
 
                         double waitTime = oneSample * waitNum;
 
@@ -399,6 +419,7 @@ namespace OPL2LPT_Player
                     }
                 }
             }
+
 
             if (YM3812freq == 0 && YM3526freq == 0)
             {
